@@ -2,9 +2,22 @@
 
 ## Intro
 
-OpenCloning is a web application to generate molecular cloning strategies in json format, and share them with others. It is the first brick in the construction of [Genestorian](https://www.genestorian.org/), a web application to manage collections of plasmids, strains and cell lines.
 
-You can find a demo video of the application at https://www.youtube.com/watch?v=n0hedzvpW88
+OpenCloning is an Open-Source web application to plan and document cloning. Users can:
+
+* 📡 Import plasmid sequences from AddGene and gene sequences from NCBI.
+* 📁 Load their own sequence files.
+* 🧬 Plan cloning and design primers using common techniques (Gibson, golden gate, gateway, etc.).
+* 🦠 Plan strain and cell line engineering via CRISPR and homologous recombination, with use-cases not supported by SnapGene or Benchling.
+* 🤖 Automate repetitive cloning and primer design using scripts or web forms.
+* 💾 Download final constructs as GenBank or FASTA files.
+* 📜 Archive the entire cloning history in an Open format and load it later.
+* 🛠️ Create reusable cloning templates for cloning kits.
+
+To learn more, visit:
+* 🌐 The hosted app: https://opencloning.org/
+* 📽️ The demo videos: https://www.youtube.com/watch?v=n0hedzvpW88&t=158s&ab_channel=Genestorian
+
 
 ## :timer_clock: Getting started in 5 minutes
 
@@ -85,7 +98,7 @@ You can see how the workflow of cloning happens in the app in [this video](https
 
 ### Encoding this information
 
-The data model is built using the [LinkML](https://linkml.io/) framework, and can be accessed in [this repository](https://github.com/genestorian/OpenCloning_LinkML).
+The data model is built using the [LinkML](https://linkml.io/) framework, and can be accessed in [this repository](https://github.com/OpenCloning/OpenCloning_LinkML).
 
 For an example of the data model to represent an homologous recombination, you can see [this json file](https://github.com/manulera/OpenCloning_frontend/blob/master/public/examples/homologous_recombination.json).
 
