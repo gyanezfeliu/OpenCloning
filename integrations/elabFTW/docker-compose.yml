@@ -22,7 +22,7 @@ services:
     # use a specific version tag to pin the image
     # example: elabftw/elabimg:4.0.5
     # default value: elabftw/elabimg:stable
-    image: elabftw/elabimg:stable
+    image: elabftw/elabimg:opencloning
     # this ensures the container will be restarted after a reboot of the server
     # default value: always
     restart: always
@@ -295,7 +295,11 @@ services:
         # set to true in a development environment.
         # This will remove php cache, serve assets directly (instead of the brotli/gzip version) and make composer available.
         # default value: false
-        #- DEV_MODE=false
+
+        # IMPORTANT: end with trailing slash!
+        - INDIGO_URL=""
+        - FINGERPRINTER_URL=""
+        - OPENCLONING_URL=http://localhost:8000/
 
     ports:
         # Important note about exposing ports: due to the way Docker deals with the host firewall, it is recommended to use '127.0.0.1:1234:443'
@@ -484,3 +488,15 @@ services:
   #      - "6443:443"
   #    networks:
   #        - elabftw-net
+
+  # OpenCloning
+  opencloning:
+    image: manulera/opencloning:v0.4.2-oc-base
+    restart: always
+    container_name: opencloning-plugin
+    networks:
+      - elabftw-net
+    environment:
+      - ALLOWED_ORIGINS=*
+      - ROOT_PATH=/opencloning
+      - BACKEND_URL=/opencloning/
