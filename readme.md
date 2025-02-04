@@ -2,13 +2,13 @@
 
 ## Intro
 
-ShareYourCloning is a web application to generate molecular cloning strategies in json format, and share them with others. It is the first brick in the construction of [Genestorian](https://www.genestorian.org/), a web application to manage collections of plasmids, strains and cell lines.
+OpenCloning is a web application to generate molecular cloning strategies in json format, and share them with others. It is the first brick in the construction of [Genestorian](https://www.genestorian.org/), a web application to manage collections of plasmids, strains and cell lines.
 
 You can find a demo video of the application at https://www.youtube.com/watch?v=n0hedzvpW88
 
 ## :timer_clock: Getting started in 5 minutes
 
-If you just want to try the application, the easiest way is to go to the hosted version at: [https://shareyourcloning.org/](https://shareyourcloning.org/).
+If you just want to try the application, the easiest way is to go to the hosted version at: [https://opencloning.org/](https://opencloning.org/).
 
 If you want to quickly set up a local instance of the application using docker, you can clone this repository, and from the root directory call:
 
@@ -23,25 +23,25 @@ This uses the provided `docker-compose.yaml` and `config.json` files in this rep
 
 ## Running it yourself using docker in a single container
 
-You can use the image [manulera/shareyourcloning](https://hub.docker.com/r/manulera/shareyourcloning), and use `docker-compose.yaml` as a starting point. The important information to know is that:
+You can use the image [manulera/opencloning](https://hub.docker.com/r/manulera/opencloning), and use `docker-compose.yaml` as a starting point. The important information to know is that:
 
 * The image exposes port 8000.
-* You can allow requests to the API from origins other than the frontend via CORS using ENV variables, see the [backend configuration](https://github.com/manulera/ShareYourCloning_backend#connecting-to-the-frontend). See the comments in the `docker-compose.yaml` file.
+* You can allow requests to the API from origins other than the frontend via CORS using ENV variables, see the [backend configuration](https://github.com/manulera/OpenCloning_backend#connecting-to-the-frontend). See the comments in the `docker-compose.yaml` file.
 * This container serves both the frontend and the backend, but you can run them as separate containers (will need CORS configuration).
 
 ```bash
-docker pull manulera/shareyourcloning
-docker run -p 8000:8000 manulera/shareyourcloning
+docker pull manulera/opencloning
+docker run -p 8000:8000 manulera/opencloning
 ```
 
 ### Running an instance in GitHub Codespaces
 
 * Click the menu at the top left of the github website, then click codespaces
 * On the top-right click on `New codespace`
-* On `Repository` select `manulera/ShareYourCloning`
+* On `Repository` select `manulera/OpenCloning`
 * Click on `Create codespace`
 * In the terminal enter `docker-compose up`
-* Once complete a popup will appear saying port 8000 is now available, click `Open in Browser` to navigate to your own version of the ShareYourCloning app
+* Once complete a popup will appear saying port 8000 is now available, click `Open in Browser` to navigate to your own version of the OpenCloning app
 * Optional: To share with other users, navigate to the ports tab of the github codespace and right click and change port visibility to public
 
 
@@ -49,20 +49,20 @@ docker run -p 8000:8000 manulera/shareyourcloning
 
 If you want to run a dev server locally, or run the site without using docker, you can see how to set up the backend and frontend in their respective repositories:
 
-* [Frontend](https://github.com/manulera/ShareYourCloning_frontend)
-* [Backend](https://github.com/manulera/ShareYourCloning_backend)
+* [Frontend](https://github.com/manulera/OpenCloning_frontend)
+* [Backend](https://github.com/manulera/OpenCloning_backend)
 
 ### Backend
 
-The code of the backend is here: [https://github.com/manulera/ShareYourCloning_backend](https://github.com/manulera/ShareYourCloning_backend)
+The code of the backend is here: [https://github.com/manulera/OpenCloning_backend](https://github.com/manulera/OpenCloning_backend)
 
-The backend is a web API built with FastAPI. For information on what it does, and how to install it and what it does see [this](https://github.com/manulera/ShareYourCloning_backend).
+The backend is a web API built with FastAPI. For information on what it does, and how to install it and what it does see [this](https://github.com/manulera/OpenCloning_backend).
 
 ### Frontend
 
-The code of the frontend is here: [https://github.com/manulera/ShareYourCloning_frontend](https://github.com/manulera/ShareYourCloning_frontend)
+The code of the frontend is here: [https://github.com/manulera/OpenCloning_frontend](https://github.com/manulera/OpenCloning_frontend)
 
-The frontend application is built with react, and it is the "family tree builder" that you will see in your browser. For more info on what it does and how to install it see [this](https://github.com/manulera/ShareYourCloning_frontend)
+The frontend application is built with react, and it is the "family tree builder" that you will see in your browser. For more info on what it does and how to install it see [this](https://github.com/manulera/OpenCloning_frontend)
 
 ## About
 
@@ -85,9 +85,9 @@ You can see how the workflow of cloning happens in the app in [this video](https
 
 ### Encoding this information
 
-The data model is built using the [LinkML](https://linkml.io/) framework, and can be accessed in [this repository](https://github.com/genestorian/ShareYourCloning_LinkML).
+The data model is built using the [LinkML](https://linkml.io/) framework, and can be accessed in [this repository](https://github.com/genestorian/OpenCloning_LinkML).
 
-For an example of the data model to represent an homologous recombination, you can see [this json file](https://github.com/manulera/ShareYourCloning_frontend/blob/master/public/examples/homologous_recombination.json).
+For an example of the data model to represent an homologous recombination, you can see [this json file](https://github.com/manulera/OpenCloning_frontend/blob/master/public/examples/homologous_recombination.json).
 
 From the json, you can see how wvery `entity` (a sequence) comes from a `source`, and every `entity` can be the input of another `source`. The application frontend provides an interface where the user can specify a `source` (with or without inputs). This `source` is sent to the backend in a `POST` request, where the step encoded in the `source` is executed, and the output `entity` is returned and displayed in the frontend. When multiple outputs could come out of a `source` (for example, a restriction enzyme digestion), the user can select which one of them is the desired output. Then the user can use the output `entity` as an input for a new `source`, and so on.
 

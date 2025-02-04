@@ -1,9 +1,9 @@
 ARG FRONTEND_TAG="prod"
 ARG BACKEND_TAG="prod"
 
-FROM manulera/shareyourcloningfrontend:${FRONTEND_TAG} AS frontend
+FROM manulera/opencloningfrontend:${FRONTEND_TAG} AS frontend
 
-FROM manulera/shareyourcloningbackend:${BACKEND_TAG} AS backend
+FROM manulera/opencloningbackend:${BACKEND_TAG} AS backend
 WORKDIR /home/backend
 COPY --from=frontend /build ./frontend
 COPY ./docker_entrypoint.sh ./
