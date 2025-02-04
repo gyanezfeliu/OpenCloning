@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: manulera/shareyourcloning
+          images: manulera/opencloning
 
       - name: Build and push Docker image (release)
         if: github.event_name == 'release'
@@ -34,24 +34,24 @@ jobs:
           context: .
           push: true
           tags: |
-            manulera/shareyourcloning:latest
-            manulera/shareyourcloning:prod
-            manulera/shareyourcloning:${{ github.ref_name }}
+            manulera/opencloning:latest
+            manulera/opencloning:prod
+            manulera/opencloning:${{ github.ref_name }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Build and push Docker image (release-syc)
+      - name: Build and push Docker image (release-oc)
         if: github.event_name == 'release'
         uses: docker/build-push-action@v6.9.0
         with:
           context: .
           push: true
           tags: |
-            manulera/shareyourcloning:prod-syc-base
-            manulera/shareyourcloning:${{ github.ref_name }}-syc-base
+            manulera/opencloning:prod-oc-base
+            manulera/opencloning:${{ github.ref_name }}-oc-base
 
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            FRONTEND_TAG=prod-syc-base
+            FRONTEND_TAG=prod-oc-base
 
       - name: Build and push Docker image (workflow_dispatch)
         if: github.event_name == 'workflow_dispatch'
@@ -60,16 +60,16 @@ jobs:
           context: .
           push: true
           tags: |
-            manulera/shareyourcloning:latest
+            manulera/opencloning:latest
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Build and push Docker image (workflow_dispatch-syc)
+      - name: Build and push Docker image (workflow_dispatch-oc)
         if: github.event_name == 'workflow_dispatch'
         uses: docker/build-push-action@v6.9.0
         with:
           context: .
           push: true
           tags: |
-            manulera/shareyourcloning:latest-syc-base
+            manulera/opencloning:latest-oc-base
           build-args: |
-            FRONTEND_TAG=latest-syc-base
+            FRONTEND_TAG=latest-oc-base
