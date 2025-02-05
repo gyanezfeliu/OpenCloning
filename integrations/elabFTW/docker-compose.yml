@@ -22,7 +22,7 @@ services:
     # use a specific version tag to pin the image
     # example: elabftw/elabimg:4.0.5
     # default value: elabftw/elabimg:stable
-    image: elabftw/elabimg:opencloning
+    image: elabftw/elabimg:stable
     # this ensures the container will be restarted after a reboot of the server
     # default value: always
     restart: always
@@ -53,289 +53,303 @@ services:
     # nginx: [emerg] bind() to 0.0.0.0:443 failed (13: Permission denied)
     # comment out these lines!
     cap_drop:
-        - ALL
+      - ALL
     cap_add:
-        - CHOWN
-        - SETGID
-        - SETUID
-        - FOWNER
-        - DAC_OVERRIDE
+      - CHOWN
+      - SETGID
+      - SETUID
+      - FOWNER
+      - DAC_OVERRIDE
 
     # environment variables passed to the container to configure options at run time (when container is started)
     # commented variables are optional
     environment:
-        #######################
-        # MYSQL CONFIGURATION #
-        #######################
-        # name of the MySQL server (by default "mysql" the name of the mysql container in default elabftw Docker configuration)
-        # you can put here the IP address of an existing MySQL server if you already have one running
-        # default value: mysql
-        - DB_HOST=mysql
+      #######################
+      # MYSQL CONFIGURATION #
+      #######################
+      # name of the MySQL server (by default "mysql" the name of the mysql container in default elabftw Docker configuration)
+      # you can put here the IP address of an existing MySQL server if you already have one running
+      # default value: mysql
+      - DB_HOST=mysql
 
-        # port on which the MySQL server is listening
-        # you probably don't need to modify this value
-        # default value: 3306
-        - DB_PORT=3306
+      # port on which the MySQL server is listening
+      # you probably don't need to modify this value
+      # default value: 3306
+      - DB_PORT=3306
 
-        # name of the MySQL database
-        # you probably don't need to modify this value
-        # default value: elabftw
-        - DB_NAME=elabftw
+      # name of the MySQL database
+      # you probably don't need to modify this value
+      # default value: elabftw
+      - DB_NAME=elabftw
 
-        # MySQL user with write access to the previously named database
-        # you probably don't need to modify this value
-        # default value: elabftw
-        - DB_USER=elabftw
+      # MySQL user with write access to the previously named database
+      # you probably don't need to modify this value
+      # default value: elabftw
+      - DB_USER=elabftw
 
-        # MySQL password; a random password has been generated for you but feel free to change it if needed
-        # default value: generated randomly if you get the config from get.elabftw.net
-        - DB_PASSWORD=RBFj2cWCPepFLwj7dbRNlcMTzaCZvpR
+      # MySQL password; a random password has been generated for you but feel free to change it if needed
+      # default value: generated randomly if you get the config from get.elabftw.net
+      - DB_PASSWORD=secr3t
 
-        # Mysql Cert path: you only need this if you connect to a mysql server with tls
-        # Use a volume that points to /mysql-cert in the container
-        # optional
-        #- DB_CERT_PATH=/mysql-cert/cert.pem
+      # Mysql Cert path: you only need this if you connect to a mysql server with tls
+      # Use a volume that points to /mysql-cert in the container
+      # optional
+      #- DB_CERT_PATH=/mysql-cert/cert.pem
 
-        #####################
-        # PHP CONFIGURATION #
-        #####################
-        # the timezone in which the server is
-        # better if changed (see list of available values: http://php.net/manual/en/timezones.php
-        - PHP_TIMEZONE=Europe/Paris
-        # again
-        - TZ=Europe/Paris
+      #####################
+      # PHP CONFIGURATION #
+      #####################
+      # the timezone in which the server is
+      # better if changed (see list of available values: http://php.net/manual/en/timezones.php
+      - PHP_TIMEZONE=Europe/Paris
+      # again
+      - TZ=Europe/Paris
 
-        # optional: set the limit of simultaneous request that will be served
-        # see http://php.net/manual/en/install.fpm.configuration.php
-        # default value: 50
-        #- PHP_MAX_CHILDREN=50
+      # optional: set the limit of simultaneous request that will be served
+      # see http://php.net/manual/en/install.fpm.configuration.php
+      # default value: 50
+      #- PHP_MAX_CHILDREN=50
 
-        # optional: adjust the max execution time of PHP scripts, in seconds
-        # default value: 120
-        #- PHP_MAX_EXECUTION_TIME=120
+      # optional: adjust the max execution time of PHP scripts, in seconds
+      # default value: 120
+      #- PHP_MAX_EXECUTION_TIME=120
 
-        # optional: adjust the amount of memory available to PHP, increase it if you run into issues
-        # information: 2G of memory available to PHP might seem a lot. But realize this: it's not 2003 anymore. PHP is not just a few "if" and "foreach" in some html page.
-        # We use it to generate huge PDF files and archives, to manipulate potentially big images, and do complicated operations on thousands of objects fast.
-        # So yeah, the conservative 128 Mb default is obsolete when a simple photo taken with a phone can be 10 Mb.
-        # Most of the servers that run eLabFTW will run ONLY eLab and will easily have at least 4 Gb of RAM dedicated to this task.
-        # What is the point of having 4 Gb of RAM and let the main application use only a few percents of it...
-        # This doesn't mean that eLabFTW will consume that much memory all the time. 99% of the time it will have very low memory footprint.
-        # But from time to time, users will export many entries at once in PDF with big images in them and that's when you want to have some headroom!
-        # example value: 4G
-        # default value: 2G
-        #- MAX_PHP_MEMORY=2G
+      # optional: adjust the amount of memory available to PHP, increase it if you run into issues
+      # information: 2G of memory available to PHP might seem a lot. But realize this: it's not 2003 anymore. PHP is not just a few "if" and "foreach" in some html page.
+      # We use it to generate huge PDF files and archives, to manipulate potentially big images, and do complicated operations on thousands of objects fast.
+      # So yeah, the conservative 128 Mb default is obsolete when a simple photo taken with a phone can be 10 Mb.
+      # Most of the servers that run eLabFTW will run ONLY eLab and will easily have at least 4 Gb of RAM dedicated to this task.
+      # What is the point of having 4 Gb of RAM and let the main application use only a few percents of it...
+      # This doesn't mean that eLabFTW will consume that much memory all the time. 99% of the time it will have very low memory footprint.
+      # But from time to time, users will export many entries at once in PDF with big images in them and that's when you want to have some headroom!
+      # example value: 4G
+      # default value: 2G
+      #- MAX_PHP_MEMORY=2G
 
-        # optional: set a password to get access to /php-status, which will display various metrics about the php-fpm processes
-        # also works for /nginx-status, for metrics about nginx process
-        # if this is not set, a random password will be generated but never displayed, effectively disabling access to this endpoint
-        # the enpdoint can be accessed with the "elabftw" user, and the password you set below
-        # example value: my-cool-password
-        # default value: not set
-        #- STATUS_PASSWORD=
+      # optional: set a password to get access to /php-status, which will display various metrics about the php-fpm processes
+      # also works for /nginx-status, for metrics about nginx process
+      # if this is not set, a random password will be generated but never displayed, effectively disabling access to this endpoint
+      # the enpdoint can be accessed with the "elabftw" user, and the password you set below
+      # example value: my-cool-password
+      # default value: not set
+      #- STATUS_PASSWORD=
 
-        #########################
-        # ELABFTW CONFIGURATION #
-        #########################
-        # The secret key is used for encrypting the SMTP and Timestamping passwords
-        # A random one has been generated for you, if you wish to change it you can
-        # get another secret key from https://get.elabftw.net/?key
-        # if you don't want to get it from an external source you can also do that:
-        # docker run --rm -t --entrypoint '/bin/sh' elabftw/elabimg -c "php -d memory_limit=10M -d open_basedir='' bin/init tools:genkey"
-        # Note: the value MUST be generated as shown in the methods above.
-        # default value: generated randomly if you get the config from get.elabftw.net
-        - SECRET_KEY=def000007f259b9a0e380329387bf1d6ea5b56aa44a9d1d924aad44a559ea954f3386ee222f2576e13b4637993ceaf301e293e62b5476362929f1f4b48cd5469da870356
+      #########################
+      # ELABFTW CONFIGURATION #
+      #########################
+      # The secret key is used for encrypting the SMTP and Timestamping passwords
+      # A random one has been generated for you, if you wish to change it you can
+      # get another secret key from https://get.elabftw.net/?key
+      # if you don't want to get it from an external source you can also do that:
+      # docker run --rm -t --entrypoint '/bin/sh' elabftw/elabimg -c "php -d memory_limit=10M -d open_basedir='' bin/init tools:genkey"
+      # Note: the value MUST be generated as shown in the methods above.
+      # default value: generated randomly if you get the config from get.elabftw.net
+      - SECRET_KEY=
 
-        # The canonical URL to the website, including port if not standard
-        # Use the user-facing URL here.
-        # example value: https://elab.uni-delta.fr
-        # example value: https://elab.uni-delta.fr:3148
-        - SITE_URL=
+      # The canonical URL to the website, including port if not standard
+      # Use the user-facing URL here.
+      # example value: https://elab.uni-delta.fr
+      # example value: https://elab.uni-delta.fr:3148
+      - SITE_URL=
 
-        # optional: adjust maximum size of uploaded files
-        # default value: 100M
-        #- MAX_UPLOAD_SIZE=100M
+      # optional: adjust maximum size of uploaded files
+      # default value: 100M
+      #- MAX_UPLOAD_SIZE=100M
 
-        # optional: adjust maximum time for uploading files, in milliseconds
-        # default value: 900000
-        #- MAX_UPLOAD_TIME=900000
+      # optional: adjust maximum time for uploading files, in milliseconds
+      # default value: 900000
+      #- MAX_UPLOAD_TIME=900000
 
-        # optional: s3 storage credentials
-        #- ELAB_AWS_ACCESS_KEY=
-        #- ELAB_AWS_SECRET_KEY=
+      # optional: s3 storage credentials
+      #- ELAB_AWS_ACCESS_KEY=
+      #- ELAB_AWS_SECRET_KEY=
 
-        #######################
-        # NGINX CONFIGURATION #
-        #######################
-        # change to your server name in nginx config
-        # default value: localhost
-        # example value: elab.uni.edu
-        - SERVER_NAME=localhost
+      #######################
+      # NGINX CONFIGURATION #
+      #######################
+      # change to your server name in nginx config
+      # default value: localhost
+      # example value: elab.uni.edu
+      - SERVER_NAME=localhost
 
-        # optional: disable https, use this to have an http server listening on port 443
-        # useful if the SSL stack is handled by haproxy or something alike
-        # default value: false
-        - DISABLE_HTTPS=false
+      # optional: disable https, use this to have an http server listening on port 443
+      # useful if the SSL stack is handled by haproxy or something alike
+      # default value: false
+      - DISABLE_HTTPS=false
 
-        # set to true to use letsencrypt or other certificates
-        # note: does nothing if DISABLE_HTTPS is set to true
-        # default value: false
-        - ENABLE_LETSENCRYPT=false
+      # set to true to use letsencrypt or other certificates
+      # note: does nothing if DISABLE_HTTPS is set to true
+      # default value: false
+      - ENABLE_LETSENCRYPT=false
 
-        # optional: enable ipv6 (make sure you have an AAAA dns record!)
-        # default value: false
-        #- ENABLE_IPV6=false
+      # optional: enable ipv6 (make sure you have an AAAA dns record!)
+      # default value: false
+      #- ENABLE_IPV6=false
 
-        # optional: adjust the user/group that will own the uploaded files (and run the webserver)
-        # useful if your files are stored on an NFS mount point where the files ownership are imposed by the NFS server
-        # default value: nginx
-        # example value: nobody
-        #- ELABFTW_USER=nginx
-        # default value: nginx
-        # example value: nobody
-        #- ELABFTW_GROUP=nginx
-        # default value: 101
-        # example value: 65534
-        #- ELABFTW_USERID=101
-        # default value: 101
-        # example value: 65534
-        #- ELABFTW_GROUPID=101
+      # optional: adjust the user/group that will own the uploaded files (and run the webserver)
+      # useful if your files are stored on an NFS mount point where the files ownership are imposed by the NFS server
+      # default value: nginx
+      # example value: nobody
+      #- ELABFTW_USER=nginx
+      # default value: nginx
+      # example value: nobody
+      #- ELABFTW_GROUP=nginx
+      # default value: 101
+      # example value: 65534
+      #- ELABFTW_USERID=101
+      # default value: 101
+      # example value: 65534
+      #- ELABFTW_GROUPID=101
 
-        # optional: enable if you want nginx to be configured with set_real_ip_from directives
-        # default value: false
-        #- SET_REAL_IP=false
-        # the IP address/addresses. Separate them with a , AND A SPACE. Several set_real_ip_from lines will be added to the nginx config. One for each.
-        # this does nothing if SET_REAL_IP is set to false
-        #- SET_REAL_IP_FROM=192.168.31.48, 192.168.0.42, 10.10.13.37
+      # optional: enable if you want nginx to be configured with set_real_ip_from directives
+      # default value: false
+      #- SET_REAL_IP=false
+      # the IP address/addresses. Separate them with a , AND A SPACE. Several set_real_ip_from lines will be added to the nginx config. One for each.
+      # this does nothing if SET_REAL_IP is set to false
+      #- SET_REAL_IP_FROM=192.168.31.48, 192.168.0.42, 10.10.13.37
 
-        # optional: modify connection persistence for MySQL
-        # pdo doc: https://www.php.net/manual/en/pdo.connections.php
-        # default: true
-        # example value: false
-        #- USE_PERSISTENT_MYSQL_CONN=true
+      # optional: modify connection persistence for MySQL
+      # pdo doc: https://www.php.net/manual/en/pdo.connections.php
+      # default: true
+      # example value: false
+      #- USE_PERSISTENT_MYSQL_CONN=true
 
-        # optional: adjust the number of worker processes nginx will spawn
-        # default value: auto
-        # if auto doesn't work for you, use the number of cores available on the server (or less)
-        #- NGINX_WORK_PROC=auto
+      # optional: adjust the number of worker processes nginx will spawn
+      # default value: auto
+      # if auto doesn't work for you, use the number of cores available on the server (or less)
+      #- NGINX_WORK_PROC=auto
 
-        # optional: allow javascript code to call the API from an external service
-        # this will add a response header Access-Control-Allow-Origin with content of the env var as value
-        # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
-        # default: header not set (empty value)
-        # example value: app.example.org
-        # example value: *
-        #- ALLOW_ORIGIN=
+      # optional: allow javascript code to call the API from an external service
+      # this will add a response header Access-Control-Allow-Origin with content of the env var as value
+      # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+      # default: header not set (empty value)
+      # example value: app.example.org
+      # example value: *
+      #- ALLOW_ORIGIN=
 
-        # optional: define methods allowed to javascript code calling the API from an external service
-        # this will add a response header Access-Control-Allow-Methods with content of the env var as value
-        # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
-        # default: header not set (empty value)
-        # example value: GET, POST, PATCH
-        #- ALLOW_METHODS=
+      # optional: define methods allowed to javascript code calling the API from an external service
+      # this will add a response header Access-Control-Allow-Methods with content of the env var as value
+      # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
+      # default: header not set (empty value)
+      # example value: GET, POST, PATCH
+      #- ALLOW_METHODS=
 
-        # optional: define headers allowed to javascript code calling the API from an external service
-        # this will add a response header Access-Control-Allow-Headers with content of the env var as value
-        # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
-        # default: header not set (empty value)
-        # example value: Content-Type, Authorization
-        #- ALLOW_HEADERS=
+      # optional: define headers allowed to javascript code calling the API from an external service
+      # this will add a response header Access-Control-Allow-Headers with content of the env var as value
+      # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
+      # default: header not set (empty value)
+      # example value: Content-Type, Authorization
+      #- ALLOW_HEADERS=
 
-        # optional: modify the keepalive_timeout value
-        # nginx doc: http://nginx.org/en/docs/http/ngx_http_core_module.html#keepalive_timeout
-        # default: 10s
-        # example value: 5s
-        #- KEEPALIVE_TIMEOUT=10s
+      # optional: modify the keepalive_timeout value
+      # nginx doc: http://nginx.org/en/docs/http/ngx_http_core_module.html#keepalive_timeout
+      # default: 10s
+      # example value: 5s
+      #- KEEPALIVE_TIMEOUT=10s
 
-        #######################
-        # REDIS CONFIGURATION #
-        #######################
-        # optional: use a redis server to store the PHP sessions
-        # default value: false
-        #- USE_REDIS=false
-        # optional: set an IP or hostname for the redis server
-        # default value: redis
-        #- REDIS_HOST=redis
-        # optional: set a custom port for redis
-        # default value: 6379
-        #- REDIS_PORT=6379
-        # optional: set a username for redis
-        # default value: <empty>
-        #- REDIS_USERNAME=
-        # optional: set a password for redis
-        # default value: <empty>
-        #- REDIS_PASSWORD=
+      #######################
+      # REDIS CONFIGURATION #
+      #######################
+      # optional: use a redis server to store the PHP sessions
+      # default value: false
+      #- USE_REDIS=false
+      # optional: set an IP or hostname for the redis server
+      # default value: redis
+      #- REDIS_HOST=redis
+      # optional: set a custom port for redis
+      # default value: 6379
+      #- REDIS_PORT=6379
+      # optional: set a username for redis
+      # default value: <empty>
+      #- REDIS_USERNAME=
+      # optional: set a password for redis
+      # default value: <empty>
+      #- REDIS_PASSWORD=
 
-        ######################
-        # LDAP CONFIGURATION #
-        ######################
-        # optional: configure ldap certificate verification behavior: will create /etc/openldap/ldap.conf with TLS_REQCERT config line
-        # default value: false
-        # possible values: never, allow, try
-        #- LDAP_TLS_REQCERT=false
+      ######################
+      # LDAP CONFIGURATION #
+      ######################
+      # optional: configure ldap certificate verification behavior: will create /etc/openldap/ldap.conf with TLS_REQCERT config line
+      # default value: false
+      # possible values: never, allow, try
+      #- LDAP_TLS_REQCERT=false
 
-        #################
-        # MISCELLANEOUS #
-        #################
-        # optional: be less verbose during init
-        # default value: false
-        #- SILENT_INIT=false
+      #################
+      # MISCELLANEOUS #
+      #################
+      # optional: be less verbose during init
+      # default value: false
+      #- SILENT_INIT=false
 
-        # optional: automatically install the database structure on container start
-        # default value: false
-        #- AUTO_DB_INIT=false
+      # optional: automatically install the database structure on container start
+      # default value: false
+      #- AUTO_DB_INIT=false
 
-        # optional: automatically update the database structure on container start
-        # default value: false
-        #- AUTO_DB_UPDATE=false
+      # optional: automatically update the database structure on container start
+      # default value: false
+      #- AUTO_DB_UPDATE=false
 
-        #######
-        # DEV #
-        #######
-        # set to true in a development environment.
-        # This will remove php cache, serve assets directly (instead of the brotli/gzip version) and make composer available.
-        # default value: false
+      ###########
+      # PLUGINS #
+      ###########
+      # Activating these plugins is highly recommended for all labs
+      # See below the configuration necessary to deploy them.
+      # optional: define chemistry/biology plugin services domain name + port
+      # IMPORTANT: end url values with trailing slash!
+      #
+      # This service is necessary for the Chemical structure editor (Ketcher)
+      #- USE_INDIGO=false
+      #- INDIGO_URL=http://chem-plugin/
+      # The fingerprinter is necessary to create a fingerprint of chemical compounds so we can do sub-structure search
+      #- USE_FINGERPRINTER=false
+      #- FINGERPRINTER_URL=http://chem-plugin:8000/
+      # This is for the integration of the DNA Cloning tool
+      #- USE_OPENCLONING=false
+      #- OPENCLONING_URL=http://opencloning-plugin/
 
-        # IMPORTANT: end with trailing slash!
-        - INDIGO_URL=""
-        - FINGERPRINTER_URL=""
-        - OPENCLONING_URL=http://localhost:8000/
+      #######
+      # DEV #
+      #######
+      # set to true in a development environment.
+      # This will remove php cache, serve assets directly (instead of the brotli/gzip version) and make composer available.
+      # default value: false
+      #- DEV_MODE=false
 
     ports:
-        # Important note about exposing ports: due to the way Docker deals with the host firewall, it is recommended to use '127.0.0.1:1234:443'
-        # if you only want to expose the service locally (on port 1234 in this example). See https://github.com/moby/moby/issues/22054
-        # Another option is to use the "expose" directive instead of "ports" and let your reverse proxy figure things out.
-        #
-        # if you want elabftw to run on a different port, change the first number
-        # host:container
-        - '443:443'
-        # if you are aiming for running multiple instances of this container you can put a range like so:
-        # - "3100-3200:443"
-        # use redis for session storage if that is the case, or configure your load balancer with sticky sessions
+      # Important note about exposing ports: due to the way Docker deals with the host firewall, it is recommended to use '127.0.0.1:1234:443'
+      # if you only want to expose the service locally (on port 1234 in this example). See https://github.com/moby/moby/issues/22054
+      # Another option is to use the "expose" directive instead of "ports" and let your reverse proxy figure things out.
+      #
+      # if you want elabftw to run on a different port, change the first number
+      # host:container
+      - "443:443"
+      # if you are aiming for running multiple instances of this container you can put a range like so:
+      # - "3100-3200:443"
+      # use redis for session storage if that is the case, or configure your load balancer with sticky sessions
     volumes:
-        # this is where you will keep the uploaded files persistently
-        # for Windows users it might look like this
-        # - D:\Users\Nico\elab-data\web:/elabftw/uploads
-        # host:container
-        - /var/elabftw/web:/elabftw/uploads
-        #
-        # TLS configuration
-        #
-        # Note: if your certificate is not from letsencrypt, make sure to have those two files:
-        #
-        #       /etc/letsencrypt/live/SERVER_NAME/fullchain.pem
-        #       /etc/letsencrypt/live/SERVER_NAME/privkey.pem
-        #
-        # in the folder /etc/letsencrypt (or any folder you like as long as you adapt the line below
-        # replace SERVER_NAME with the value of SERVER_NAME of course.
-        #
-        # if you have enabled letsencrypt, uncomment the line below
-        # path to the folder with TLS certificate + private key
-        # host:container
-        #- /etc/letsencrypt:/ssl
-        #
-        # MYSQL cert path
-        #- /path/to/cert/folder:/mysql-cert
+      # this is where you will keep the uploaded files persistently
+      # for Windows users it might look like this
+      # - D:\Users\Nico\elab-data\web:/elabftw/uploads
+      # host:container
+      - /var/elabftw/web:/elabftw/uploads
+      #
+      # TLS configuration
+      #
+      # Note: if your certificate is not from letsencrypt, make sure to have those two files:
+      #
+      #       /etc/letsencrypt/live/SERVER_NAME/fullchain.pem
+      #       /etc/letsencrypt/live/SERVER_NAME/privkey.pem
+      #
+      # in the folder /etc/letsencrypt (or any folder you like as long as you adapt the line below
+      # replace SERVER_NAME with the value of SERVER_NAME of course.
+      #
+      # if you have enabled letsencrypt, uncomment the line below
+      # path to the folder with TLS certificate + private key
+      # host:container
+      #- /etc/letsencrypt:/ssl
+      #
+      # MYSQL cert path
+      #- /path/to/cert/folder:/mysql-cert
 
     # This part is just an example for having a custom DNS entry in /etc/hosts of the container
     # Use it if DNS resolution cannot work for some reason
@@ -363,39 +377,57 @@ services:
       retries: 42
     # drop some capabilities
     cap_drop:
-        - AUDIT_WRITE
-        - MKNOD
-        - SYS_CHROOT
-        - SETFCAP
-        - NET_RAW
+      - AUDIT_WRITE
+      - MKNOD
+      - SYS_CHROOT
+      - SETFCAP
+      - NET_RAW
     cap_add:
-        - SYS_NICE
+      - SYS_NICE
     environment:
-        # need to change
-        - MYSQL_ROOT_PASSWORD=NC7E0eG8sQ2dh8KVo95KYs1fQioJo3i
-        # no need to change
-        - MYSQL_DATABASE=elabftw
-        # no need to change
-        - MYSQL_USER=elabftw
-        # need to change IMPORTANT: this should be the same password as DB_PASSWORD from the elabftw container
-        - MYSQL_PASSWORD=RBFj2cWCPepFLwj7dbRNlcMTzaCZvpR
-        # need to change, this is your timezone, see PHP_TIMEZONE from the elabftw container
-        - TZ=Europe/Paris
-        # Update this if you want to run the server on a different port than 3306.
-        # - MYSQL_TCP_PORT=3306
+      # need to change
+      - MYSQL_ROOT_PASSWORD=secr3t
+      # no need to change
+      - MYSQL_DATABASE=elabftw
+      # no need to change
+      - MYSQL_USER=elabftw
+      # need to change IMPORTANT: this should be the same password as DB_PASSWORD from the elabftw container
+      - MYSQL_PASSWORD=secr3t
+      # need to change, this is your timezone, see PHP_TIMEZONE from the elabftw container
+      - TZ=Europe/Paris
+      # Update this if you want to run the server on a different port than 3306.
+      # - MYSQL_TCP_PORT=3306
 
     volumes:
-        # this is where you will keep the database persistently
-        # for Windows users it might look like this
-        # - D:\Users\Nico\elab-data\mysql:/var/lib/mysql
-        # host:container
-        - /var/elabftw/mysql:/var/lib/mysql
-     # The mysql container exposes 3306/33060. Though it does not make an operational difference,
-     # make sure to document your usage here.
+      # this is where you will keep the database persistently
+      # for Windows users it might look like this
+      # - D:\Users\Nico\elab-data\mysql:/var/lib/mysql
+      # host:container
+      - /var/elabftw/mysql:/var/lib/mysql
+      # The mysql container exposes 3306/33060. Though it does not make an operational difference,
+      # make sure to document your usage here.
     expose:
-      - '3306'
+      - "3306"
     networks:
       - elabftw-net
+
+  #chem-plugin:
+  #  image: elabftw/chem-plugin
+  #  container_name: chem-plugin
+  #  restart: always
+  #  networks:
+  #    - elabftw-net
+
+  #opencloning-plugin:
+  #  image: manulera/opencloning:prod-oc-base
+  #  container_name: opencloning-plugin
+  #  restart: always
+  #  networks:
+  #    - elabftw-net
+  #  environment:
+  #    - ALLOWED_ORIGINS=*
+  #    - ROOT_PATH=/opencloning
+  #    - BACKEND_URL=/opencloning/
 
   # example of a redis container
   # uncomment if you want to spawn a redis container to manage sessions
@@ -457,7 +489,6 @@ services:
   #  networks:
   #      - elabftw-net
 
-
   # LDAP
   # example for ldap server + admin interface
   # uncomment if you want to work on LDAP authentication
@@ -488,15 +519,3 @@ services:
   #      - "6443:443"
   #    networks:
   #        - elabftw-net
-
-  # OpenCloning
-  opencloning:
-    image: manulera/opencloning:v0.4.2-oc-base
-    restart: always
-    container_name: opencloning-plugin
-    networks:
-      - elabftw-net
-    environment:
-      - ALLOWED_ORIGINS=*
-      - ROOT_PATH=/opencloning
-      - BACKEND_URL=/opencloning/
