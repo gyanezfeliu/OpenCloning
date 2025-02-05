@@ -22,7 +22,7 @@ services:
     # use a specific version tag to pin the image
     # example: elabftw/elabimg:4.0.5
     # default value: elabftw/elabimg:stable
-    image: elabftw/elabimg:stable
+    image: elabftw/elabimg:oc
     # this ensures the container will be restarted after a reboot of the server
     # default value: always
     restart: always
@@ -298,14 +298,14 @@ services:
       # IMPORTANT: end url values with trailing slash!
       #
       # This service is necessary for the Chemical structure editor (Ketcher)
-      #- USE_INDIGO=false
+      - USE_INDIGO=false
       #- INDIGO_URL=http://chem-plugin/
       # The fingerprinter is necessary to create a fingerprint of chemical compounds so we can do sub-structure search
-      #- USE_FINGERPRINTER=false
+      - USE_FINGERPRINTER=false
       #- FINGERPRINTER_URL=http://chem-plugin:8000/
       # This is for the integration of the DNA Cloning tool
-      #- USE_OPENCLONING=false
-      #- OPENCLONING_URL=http://opencloning-plugin/
+      - USE_OPENCLONING=true
+      - OPENCLONING_URL=http://opencloning-plugin/
 
       #######
       # DEV #
@@ -418,16 +418,16 @@ services:
   #  networks:
   #    - elabftw-net
 
-  #opencloning-plugin:
-  #  image: manulera/opencloning:prod-oc-base
-  #  container_name: opencloning-plugin
-  #  restart: always
-  #  networks:
-  #    - elabftw-net
-  #  environment:
-  #    - ALLOWED_ORIGINS=*
-  #    - ROOT_PATH=/opencloning
-  #    - BACKEND_URL=/opencloning/
+  opencloning-plugin:
+    image: manulera/opencloning:prod-oc-base
+    container_name: opencloning-plugin
+    restart: always
+    networks:
+      - elabftw-net
+    environment:
+      - ALLOWED_ORIGINS=*
+      - ROOT_PATH=/opencloning
+      - BACKEND_URL=/opencloning/
 
   # example of a redis container
   # uncomment if you want to spawn a redis container to manage sessions
