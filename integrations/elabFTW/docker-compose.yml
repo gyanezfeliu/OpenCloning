@@ -144,13 +144,13 @@ services:
       # docker run --rm -t --entrypoint '/bin/sh' elabftw/elabimg -c "php -d memory_limit=10M -d open_basedir='' bin/init tools:genkey"
       # Note: the value MUST be generated as shown in the methods above.
       # default value: generated randomly if you get the config from get.elabftw.net
-      - SECRET_KEY=
+      - SECRET_KEY=def0000024b25efbc34032d379dfb0983023338968396aa2238afde819fa137ece89c8a05bc35366ab65176437e269623a02f4b368149293f420a4493bd86100813ae2a6
 
       # The canonical URL to the website, including port if not standard
       # Use the user-facing URL here.
       # example value: https://elab.uni-delta.fr
       # example value: https://elab.uni-delta.fr:3148
-      - SITE_URL=
+      - SITE_URL=https://localhost:443
 
       # optional: adjust maximum size of uploaded files
       # default value: 100M
