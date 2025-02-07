@@ -225,21 +225,21 @@ services:
       # default: header not set (empty value)
       # example value: app.example.org
       # example value: *
-      #- ALLOW_ORIGIN=
+      - ALLOW_ORIGIN=*
 
       # optional: define methods allowed to javascript code calling the API from an external service
       # this will add a response header Access-Control-Allow-Methods with content of the env var as value
       # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
       # default: header not set (empty value)
       # example value: GET, POST, PATCH
-      #- ALLOW_METHODS=
+      - ALLOW_METHODS=GET, POST, PATCH
 
       # optional: define headers allowed to javascript code calling the API from an external service
       # this will add a response header Access-Control-Allow-Headers with content of the env var as value
       # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
       # default: header not set (empty value)
       # example value: Content-Type, Authorization
-      #- ALLOW_HEADERS=
+      - ALLOW_HEADERS=Content-Type, Authorization, Location
 
       # optional: modify the keepalive_timeout value
       # nginx doc: http://nginx.org/en/docs/http/ngx_http_core_module.html#keepalive_timeout
@@ -305,7 +305,7 @@ services:
       #- FINGERPRINTER_URL=http://chem-plugin:8000/
       # This is for the integration of the DNA Cloning tool
       - USE_OPENCLONING=true
-      - OPENCLONING_URL=http://opencloning-plugin/
+      - OPENCLONING_URL=http://opencloning-plugin:8000/
 
       #######
       # DEV #
@@ -419,7 +419,7 @@ services:
   #    - elabftw-net
 
   opencloning-plugin:
-    image: manulera/opencloning:prod-oc-base
+    image: manulera/opencloning:dev-elab
     container_name: opencloning-plugin
     restart: always
     networks:
