@@ -232,7 +232,7 @@ services:
       # mdn doc: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
       # default: header not set (empty value)
       # example value: GET, POST, PATCH
-      - ALLOW_METHODS=GET, POST, PATCH
+      - ALLOW_METHODS=GET, POST, PATCH, DELETE
 
       # optional: define headers allowed to javascript code calling the API from an external service
       # this will add a response header Access-Control-Allow-Headers with content of the env var as value
@@ -368,6 +368,7 @@ services:
     image: mysql:8.0
     restart: always
     container_name: mysql
+    # platform: linux/amd64
     # add an healthcheck block so the web container knows when it is ready to accept connections
     # use double $ here so env vars are correctly found
     healthcheck:
@@ -419,15 +420,18 @@ services:
   #    - elabftw-net
 
   opencloning-plugin:
-    image: manulera/opencloning:dev-elab
+    image: manulera/opencloning:prod-baseurl-opencloning
     container_name: opencloning-plugin
     restart: always
+    # platform: linux/amd64
     networks:
       - elabftw-net
     environment:
       - ALLOWED_ORIGINS=*
       - ROOT_PATH=/opencloning
       - BACKEND_URL=/opencloning/
+      - SHOW_APP_BAR=false
+      - DATABASE=elabftw
 
   # example of a redis container
   # uncomment if you want to spawn a redis container to manage sessions
