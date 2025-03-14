@@ -34,6 +34,10 @@ The application should be running at [http://localhost:8000](http://localhost:80
 
 This uses the provided `docker-compose.yaml` and `config.json` files in this repository.
 
+## Scripting
+
+You can use the backend library to script and automate cloning design. Have a look at the [scripting documentation](https://github.com/manulera/OpenCloning_backend/tree/master/examples/scripting) for more information.
+
 ## Running it yourself using docker in a single container
 
 You can use the image [manulera/opencloning](https://hub.docker.com/r/manulera/opencloning), and use `docker-compose.yaml` as a starting point. The important information to know is that:
