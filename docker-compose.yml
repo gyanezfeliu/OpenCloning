@@ -3,7 +3,7 @@ version: "3"
 services:
   opencloning:
     build: .
-    image: manulera/opencloning
+    image: manulera/opencloning:hello
     # For eLabFTW
     # image: manulera/opencloning:latest-oc-base
     ports:
