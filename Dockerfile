@@ -19,5 +19,7 @@ USER backend
 ENV SERVE_FRONTEND=1
 ENV ROOT_PATH=""
 ENV BACKEND_URL="/"
+ENV SHOW_APP_BAR=true
+ENV NO_EXTERNAL_REQUESTS=false
 
 CMD sh docker_entrypoint.sh
