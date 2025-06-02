@@ -14,6 +14,7 @@ services:
     #     > Do not use http://localhost:3000/, but http://localhost:3000
     #     - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
     #
+      - ALLOWED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000
     #   If you want to use a subpath of the domain, set ROOT_PATH,
     #   this is the equivalent of --root-path in uvicorn, so the routes
     #   without this prefix will also work (e.g. / will be the same as /opencloning/).
